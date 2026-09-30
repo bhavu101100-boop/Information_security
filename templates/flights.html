@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AirportShield | Flight Management</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-body">
+
+<div class="dashboard-layout">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="sidebar-logo">
+                ✈
+            </div>
+
+            <div>
+                <h2>AirportShield</h2>
+                <span>Security System</span>
+            </div>
+
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard" class="nav-item">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="/flights" class="nav-item active">
+                <span>✈</span>
+                Flight Management
+            </a>
+
+            <a href="/integrity" class="nav-item">
+                <span>✓</span>
+                Integrity Verification
+            </a>
+
+            <a href="/logs" class="nav-item">
+                <span>▤</span>
+                Security Logs
+            </a>
+
+        </nav>
+
+        <div class="sidebar-security">
+
+            <div class="security-mini-icon">
+                🔐
+            </div>
+
+            <div>
+                <strong>System Protected</strong>
+                <small>Security monitoring active</small>
+            </div>
+
+        </div>
+
+        <a href="/logout" class="logout-button">
+            ↪ Logout
+        </a>
+
+    </aside>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="dashboard-main">
+
+        <!-- HEADER -->
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <div class="page-label">
+                    FLIGHT OPERATIONS
+                </div>
+
+                <h1>Flight Management</h1>
+
+                <p class="page-description">
+                    Manage and monitor protected airport flight records.
+                </p>
+
+            </div>
+
+            <div class="user-profile">
+
+                <div class="user-avatar">
+                    A
+                </div>
+
+                <div class="user-info">
+                    <strong>Admin</strong>
+                    <span>Security Administrator</span>
+                </div>
+
+                <div class="online-dot"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SECURITY BANNER -->
+
+        <div class="security-banner">
+
+            <div class="security-banner-icon">
+                ✓
+            </div>
+
+            <div>
+
+                <strong>
+                    Secure Flight Data Management
+                </strong>
+
+                <p>
+                    Flight records are monitored and protected
+                    using access control and integrity verification.
+                </p>
+
+            </div>
+
+            <div class="active-badge">
+                PROTECTED
+            </div>
+
+        </div>
+
+
+        <!-- ADD FLIGHT CARD -->
+
+        <div class="dashboard-card flight-form-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>Add Flight Record</h2>
+
+                    <p>
+                        Register a new flight in the secure system.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form method="POST" action="/flights">
+
+                <div class="flight-form-grid">
+
+                    <!-- IMPORTANT: name="flight_no" -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Flight Number
+                        </label>
+
+                        <input
+                            type="text"
+                            name="flight_no"
+                            placeholder="Example: AS410"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Gate
+                        </label>
+
+                        <input
+                            type="text"
+                            name="gate"
+                            placeholder="Example: B12"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Destination
+                        </label>
+
+                        <input
+                            type="text"
+                            name="destination"
+                            placeholder="Example: Dubai"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Flight Status
+                        </label>
+
+                        <select name="status" required>
+
+                            <option value="">
+                                Select Status
+                            </option>
+
+                            <option value="ON TIME">
+                                ON TIME
+                            </option>
+
+                            <option value="DELAYED">
+                                DELAYED
+                            </option>
+
+                            <option value="CANCELLED">
+                                CANCELLED
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <button type="submit"
+                        class="flight-submit-button">
+
+                    🔒 Add Secure Flight Record
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- ================= REGISTERED FLIGHTS ================= -->
+
+        <div class="dashboard-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>Registered Flight Records</h2>
+
+                    <p>
+                        Current flight management records
+                    </p>
+
+                </div>
+
+                <span class="record-count">
+                    SECURE DATA
+                </span>
+
+            </div>
+
+
+            <table class="flight-table">
+
+                <thead>
+
+                    <tr>
+
+                        <th>FLIGHT</th>
+                        <th>GATE</th>
+                        <th>DESTINATION</th>
+                        <th>STATUS</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for flight in flights %}
+
+                    <tr>
+
+                        <!-- IMPORTANT: flight_no -->
+
+                        <td>
+                            <strong>
+                                {{ flight.flight_no }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ flight.gate }}
+                        </td>
+
+                        <td>
+                            {{ flight.destination }}
+                        </td>
+
+                        <td>
+
+                            {% if flight.status == "ON TIME" %}
+
+                                <span class="status-badge on-time">
+                                    ● ON TIME
+                                </span>
+
+                            {% elif flight.status == "DELAYED" %}
+
+                                <span class="status-badge delayed">
+                                    ● DELAYED
+                                </span>
+
+                            {% elif flight.status == "CANCELLED" %}
+
+                                <span class="status-badge cancelled">
+                                    ● CANCELLED
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% else %}
+
+                    <tr>
+
+                        <td colspan="4"
+                            style="text-align:center; padding:30px; color:#8a94a5;">
+
+                            No flight records available.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- ================= SECURITY INFORMATION ================= -->
+
+        <div class="flight-security-grid">
+
+            <div class="security-info-card">
+
+                <div class="security-info-icon">
+                    🔐
+                </div>
+
+                <div>
+
+                    <strong>Access Control</strong>
+
+                    <p>
+                        Only authenticated administrators
+                        can manage flight records.
+                    </p>
+
+                </div>
+
+                <span>ACTIVE</span>
+
+            </div>
+
+
+            <div class="security-info-card">
+
+                <div class="security-info-icon">
+                    #
+                </div>
+
+                <div>
+
+                    <strong>Data Integrity</strong>
+
+                    <p>
+                        Flight information can be verified
+                        using SHA-256 hashing.
+                    </p>
+
+                </div>
+
+                <span>ACTIVE</span>
+
+            </div>
+
+
+            <div class="security-info-card">
+
+                <div class="security-info-icon">
+                    ▤
+                </div>
+
+                <div>
+
+                    <strong>Security Logging</strong>
+
+                    <p>
+                        Flight management activities
+                        are recorded in security logs.
+                    </p>
+
+                </div>
+
+                <span>ACTIVE</span>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOTER -->
+
+        <div class="dashboard-footer">
+
+            <span>
+                AirportShield 2026 • Information Security Academic Project
+            </span>
+
+            <span>
+                Secure Flight Management
+            </span>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

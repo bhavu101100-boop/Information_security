@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AirportShield | Security Logs</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body class="dashboard-body">
+
+<div class="dashboard-layout">
+
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="sidebar-logo">
+                ✈
+            </div>
+
+            <div>
+                <h2>AirportShield</h2>
+                <span>Security System</span>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="/dashboard" class="nav-item">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="/flights" class="nav-item">
+                <span>✈</span>
+                Flight Management
+            </a>
+
+            <a href="/integrity" class="nav-item">
+                <span>✓</span>
+                Integrity Verification
+            </a>
+
+            <a href="/logs" class="nav-item active">
+                <span>▤</span>
+                Security Logs
+            </a>
+
+        </nav>
+
+
+        <!-- SYSTEM STATUS -->
+
+        <div class="sidebar-security">
+
+            <div class="security-mini-icon">
+                🔐
+            </div>
+
+            <div>
+
+                <strong>System Protected</strong>
+
+                <small>
+                    Security monitoring active
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- LOGOUT -->
+
+        <a href="/logout" class="logout-button">
+            ↪ Logout
+        </a>
+
+    </aside>
+
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="dashboard-main">
+
+
+        <!-- HEADER -->
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <div class="page-label">
+                    SECURITY MONITORING
+                </div>
+
+                <h1>
+                    Security Logs
+                </h1>
+
+                <p class="page-description">
+                    Monitor authentication and security
+                    activities performed in AirportShield.
+                </p>
+
+            </div>
+
+
+            <!-- ADMIN -->
+
+            <div class="user-profile">
+
+                <div class="user-avatar">
+                    A
+                </div>
+
+                <div class="user-info">
+
+                    <strong>
+                        Admin
+                    </strong>
+
+                    <span>
+                        Security Administrator
+                    </span>
+
+                </div>
+
+                <div class="online-dot"></div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SECURITY BANNER -->
+
+        <div class="security-banner">
+
+            <div class="security-banner-icon">
+                ✓
+            </div>
+
+            <div>
+
+                <strong>
+                    Security Activity Monitoring
+                </strong>
+
+                <p>
+                    Authentication, flight management and
+                    integrity activities are recorded here.
+                </p>
+
+            </div>
+
+            <div class="active-badge">
+                ACTIVE
+            </div>
+
+        </div>
+
+
+
+        <!-- LOG INFORMATION CARDS -->
+
+        <div class="integrity-info-grid">
+
+
+            <div class="integrity-info-card">
+
+                <div class="integrity-icon">
+                    📝
+                </div>
+
+                <div>
+
+                    <strong>
+                        Activity Logs
+                    </strong>
+
+                    <span>
+                        System events recorded
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="integrity-info-card">
+
+                <div class="integrity-icon">
+                    🔐
+                </div>
+
+                <div>
+
+                    <strong>
+                        Access Monitoring
+                    </strong>
+
+                    <span>
+                        Login activity tracked
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="integrity-info-card">
+
+                <div class="integrity-icon">
+                    🛡
+                </div>
+
+                <div>
+
+                    <strong>
+                        Security Audit
+                    </strong>
+
+                    <span>
+                        Protected system activity
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= SECURITY LOG CARD ================= -->
+
+        <div class="dashboard-card">
+
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Security Activity
+                    </h2>
+
+                    <p>
+                        Recorded security events and
+                        system activities.
+                    </p>
+
+                </div>
+
+
+                <span class="record-count">
+                    {{ logs|length }} EVENTS
+                </span>
+
+            </div>
+
+
+
+            <!-- LOG TABLE -->
+
+            <div class="security-log-table">
+
+                <table class="flight-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                TIME
+                            </th>
+
+                            <th>
+                                EVENT
+                            </th>
+
+                            <th>
+                                TYPE
+                            </th>
+
+                            <th>
+                                STATUS
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                        {% for log in logs %}
+
+                        <tr>
+
+                            <!-- TIME -->
+
+                            <td>
+
+                                <strong>
+                                    {{ log.time }}
+                                </strong>
+
+                            </td>
+
+
+                            <!-- EVENT -->
+
+                            <td>
+
+                                {{ log.event }}
+
+                            </td>
+
+
+                            <!-- TYPE -->
+
+                            <td>
+
+                                {% if "Failed" in log.event %}
+
+                                    <span class="status-badge delayed">
+                                        SECURITY ALERT
+                                    </span>
+
+                                {% elif "login" in log.event|lower %}
+
+                                    <span class="status-badge on-time">
+                                        AUTHENTICATION
+                                    </span>
+
+                                {% elif "Flight" in log.event %}
+
+                                    <span class="status-badge on-time">
+                                        FLIGHT ACTIVITY
+                                    </span>
+
+                                {% elif "integrity" in log.event|lower %}
+
+                                    <span class="status-badge on-time">
+                                        INTEGRITY CHECK
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="status-badge on-time">
+                                        SYSTEM EVENT
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                {% if "Failed" in log.event %}
+
+                                    <span class="status-badge delayed">
+                                        ● REVIEW
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="status-badge on-time">
+                                        ● RECORDED
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+                        </tr>
+
+
+                        {% else %}
+
+
+                        <!-- NO LOGS -->
+
+                        <tr>
+
+                            <td colspan="4"
+                                style="text-align:center;
+                                       padding:50px;
+                                       color:#8a94a5;">
+
+                                <div style="font-size:38px;">
+                                    🛡
+                                </div>
+
+                                <h3 style="color:#17233d;">
+                                    No Security Events
+                                </h3>
+
+                                <p>
+                                    Security activity will appear
+                                    here when actions are performed.
+                                </p>
+
+                            </td>
+
+                        </tr>
+
+
+                        {% endfor %}
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ================= SECURITY INFORMATION ================= -->
+
+        <div class="flight-security-grid">
+
+
+            <div class="security-info-card">
+
+                <div class="security-info-icon">
+                    🔑
+                </div>
+
+                <div>
+
+                    <strong>
+                        Authentication Logs
+                    </strong>
+
+                    <p>
+                        Successful and failed login
+                        attempts are recorded.
+                    </p>
+
+                </div>
+
+                <span>
+                    ACTIVE
+                </span>
+
+            </div>
+
+
+
+            <div class="security-info-card">
+
+                <div class="security-info-icon">
+                    ✈
+                </div>
+
+                <div>
+
+                    <strong>
+                        Flight Activity
+                    </strong>
+
+                    <p>
+                        New flight records are recorded
+                        for security auditing.
+                    </p>
+
+                </div>
+
+                <span>
+                    ACTIVE
+                </span>
+
+            </div>
+
+
+
+            <div class="security-info-card">
+
+                <div class="security-info-icon">
+                    #
+                </div>
+
+                <div>
+
+                    <strong>
+                        Integrity Monitoring
+                    </strong>
+
+                    <p>
+                        SHA-256 integrity verification
+                        activities are logged.
+                    </p>
+
+                </div>
+
+                <span>
+                    ACTIVE
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- ================= FOOTER ================= -->
+
+        <div class="dashboard-footer">
+
+            <span>
+                AirportShield 2026 • Information Security Academic Project
+            </span>
+
+            <span>
+                Security Activity Monitoring
+            </span>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

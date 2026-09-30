@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AirportShield | Integrity Verification</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body class="dashboard-body">
+
+<div class="dashboard-layout">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="sidebar-logo">
+                ✈
+            </div>
+
+            <div>
+                <h2>AirportShield</h2>
+                <span>Security System</span>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="{{ url_for('dashboard') }}"
+               class="nav-item">
+
+                <span>▦</span>
+                Dashboard
+
+            </a>
+
+
+            <a href="{{ url_for('flight_management') }}"
+               class="nav-item">
+
+                <span>✈</span>
+                Flight Management
+
+            </a>
+
+
+            <a href="{{ url_for('integrity') }}"
+               class="nav-item active">
+
+                <span>✓</span>
+                Integrity Verification
+
+            </a>
+
+
+            <a href="{{ url_for('logs') }}"
+               class="nav-item">
+
+                <span>▤</span>
+                Security Logs
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-security">
+
+            <div class="security-mini-icon">
+                🔐
+            </div>
+
+            <div>
+
+                <strong>
+                    System Protected
+                </strong>
+
+                <small>
+                    Security monitoring active
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <a href="{{ url_for('logout') }}"
+           class="logout-button">
+
+            ↪ Logout
+
+        </a>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="dashboard-main">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <div class="dashboard-header">
+
+            <div>
+
+                <div class="page-label">
+                    DATA SECURITY
+                </div>
+
+
+                <h1>
+                    Integrity Verification
+                </h1>
+
+
+                <p class="page-description">
+
+                    Verify that protected flight records have not
+                    been modified or tampered with.
+
+                </p>
+
+            </div>
+
+
+            <div class="user-profile">
+
+                <div class="user-avatar">
+                    A
+                </div>
+
+
+                <div class="user-info">
+
+                    <strong>
+                        Admin
+                    </strong>
+
+                    <span>
+                        Security Administrator
+                    </span>
+
+                </div>
+
+
+                <div class="online-dot"></div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SECURITY BANNER
+        ================================================== -->
+
+        <div class="security-banner">
+
+            <div class="security-banner-icon">
+                ✓
+            </div>
+
+
+            <div>
+
+                <strong>
+                    SHA-256 Integrity Protection
+                </strong>
+
+
+                <p>
+
+                    Cryptographic hashing is used to detect
+                    unauthorized changes to flight data.
+
+                </p>
+
+            </div>
+
+
+            <div class="active-badge">
+                ACTIVE
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             INFORMATION CARDS
+        ================================================== -->
+
+        <div class="integrity-info-grid">
+
+
+            <!-- SHA-256 -->
+
+            <div class="integrity-info-card">
+
+                <div class="integrity-icon">
+                    #
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        SHA-256
+                    </strong>
+
+                    <span>
+                        Cryptographic Hash
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- DATA VERIFICATION -->
+
+            <div class="integrity-info-card">
+
+                <div class="integrity-icon">
+                    ✓
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Data Verification
+                    </strong>
+
+                    <span>
+                        Modification Detection
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- PROTECTED RECORDS -->
+
+            <div class="integrity-info-card">
+
+                <div class="integrity-icon">
+                    🔐
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        Protected Records
+                    </strong>
+
+                    <span>
+                        Flight Data Security
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             FLIGHT DATA INTEGRITY
+        ================================================== -->
+
+        <div class="dashboard-card integrity-card">
+
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        Flight Data Integrity
+                    </h2>
+
+
+                    <p>
+
+                        Select a flight record to verify
+                        its cryptographic integrity.
+
+                    </p>
+
+                </div>
+
+
+                <span class="record-count">
+                    SHA-256
+                </span>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 FLIGHT RECORDS
+            ================================================== -->
+
+            <div class="integrity-records">
+
+
+                {% for flight in flights %}
+
+
+                <div class="integrity-record">
+
+
+                    <!-- FLIGHT -->
+
+                    <div class="integrity-flight">
+
+                        <div class="flight-small-icon">
+                            ✈
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                {{ flight.flight_no }}
+                            </strong>
+
+
+                            <span>
+                                Gate {{ flight.gate }}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- DESTINATION -->
+
+                    <div class="integrity-destination">
+
+                        <strong>
+                            {{ flight.destination }}
+                        </strong>
+
+
+                        <span>
+                            {{ flight.status }}
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- HASH -->
+
+                    <div class="hash-status">
+
+                        <span class="hash-active">
+
+                            🔐 HASH PROTECTED
+
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- VERIFY BUTTON -->
+
+                    <form method="POST"
+                          action="{{ url_for('integrity') }}">
+
+                        <input
+                            type="hidden"
+                            name="flight_no"
+                            value="{{ flight.flight_no }}"
+                        >
+
+
+                        <button
+                            type="submit"
+                            class="verify-button">
+
+                            ✓ Verify Integrity
+
+                        </button>
+
+                    </form>
+
+
+                </div>
+
+
+                {% else %}
+
+
+                <!-- =================================================
+                     EMPTY STATE
+                ================================================== -->
+
+                <div class="empty-integrity">
+
+                    <div>
+                        🔐
+                    </div>
+
+
+                    <h3>
+                        No Flight Records
+                    </h3>
+
+
+                    <p>
+
+                        Add a flight record before performing
+                        integrity verification.
+
+                    </p>
+
+
+                    <a href="{{ url_for('flight_management') }}">
+
+                        Add Flight Record →
+
+                    </a>
+
+                </div>
+
+
+                {% endfor %}
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             VERIFICATION RESULT
+        ================================================== -->
+
+        {% if result %}
+
+
+        <div class="verification-result
+            {% if 'verified' in result|lower %}
+                verification-success
+            {% else %}
+                verification-danger
+            {% endif %}">
+
+
+            <div class="result-icon">
+
+                {% if 'verified' in result|lower %}
+
+                    ✓
+
+                {% else %}
+
+                    !
+
+                {% endif %}
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Verification Result
+                </strong>
+
+
+                <p>
+                    {{ result }}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        {% endif %}
+
+
+
+        <!-- =================================================
+             SECURITY EXPLANATION
+        ================================================== -->
+
+        <div class="dashboard-card security-explanation">
+
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>
+                        How Integrity Verification Works
+                    </h2>
+
+
+                    <p>
+
+                        AirportShield uses SHA-256 hashing
+                        to detect changes in protected data.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="hash-process">
+
+
+                <!-- STEP 01 -->
+
+                <div class="hash-step">
+
+                    <div class="hash-number">
+                        01
+                    </div>
+
+
+                    <strong>
+                        Flight Data
+                    </strong>
+
+
+                    <span>
+                        Original flight information
+                    </span>
+
+                </div>
+
+
+
+                <div class="hash-arrow">
+                    →
+                </div>
+
+
+
+                <!-- STEP 02 -->
+
+                <div class="hash-step">
+
+                    <div class="hash-number">
+                        02
+                    </div>
+
+
+                    <strong>
+                        SHA-256
+                    </strong>
+
+
+                    <span>
+                        Generate cryptographic hash
+                    </span>
+
+                </div>
+
+
+
+                <div class="hash-arrow">
+                    →
+                </div>
+
+
+
+                <!-- STEP 03 -->
+
+                <div class="hash-step">
+
+                    <div class="hash-number">
+                        03
+                    </div>
+
+
+                    <strong>
+                        Verification
+                    </strong>
+
+
+                    <span>
+                        Compare stored and current hash
+                    </span>
+
+                </div>
+
+
+
+                <div class="hash-arrow">
+                    →
+                </div>
+
+
+
+                <!-- STEP 04 -->
+
+                <div class="hash-step">
+
+                    <div class="hash-number">
+                        04
+                    </div>
+
+
+                    <strong>
+                        Result
+                    </strong>
+
+
+                    <span>
+                        Detect modification
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <div class="dashboard-footer">
+
+            <span>
+
+                AirportShield 2026 •
+                Information Security Academic Project
+
+            </span>
+
+
+            <span>
+
+                SHA-256 Data Integrity Protection
+
+            </span>
+
+        </div>
+
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

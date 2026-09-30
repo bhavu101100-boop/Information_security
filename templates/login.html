@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AirportShield | Secure Login</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="login-page">
+
+        <!-- Left Branding Section -->
+        <div class="login-brand">
+
+            <div class="brand-logo">
+                ✈
+            </div>
+
+            <h1>AirportShield</h1>
+
+            <p class="brand-subtitle">
+                Airport Security & Flight Management System
+            </p>
+
+            <div class="security-points">
+
+                <div class="security-point">
+                    <span>✓</span>
+                    Secure Authentication
+                </div>
+
+                <div class="security-point">
+                    <span>✓</span>
+                    Flight Data Protection
+                </div>
+
+                <div class="security-point">
+                    <span>✓</span>
+                    Integrity Verification
+                </div>
+
+                <div class="security-point">
+                    <span>✓</span>
+                    Security Monitoring
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- Login Card -->
+        <div class="login-section">
+
+            <div class="login-card">
+
+                <div class="login-icon">
+                    🔐
+                </div>
+
+                <h2>Secure Login</h2>
+
+                <p class="login-description">
+                    Sign in to access the AirportShield security dashboard.
+                </p>
+
+
+                {% if error %}
+
+                <div class="error-message">
+                    {{ error }}
+                </div>
+
+                {% endif %}
+
+
+                <form method="POST">
+
+                    <div class="form-group">
+
+                        <label for="username">
+                            Username
+                        </label>
+
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Enter your username"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="login-button">
+
+                        Secure Login
+                        <span>→</span>
+
+                    </button>
+
+                </form>
+
+
+                <div class="secure-status">
+
+                    <span class="status-dot"></span>
+
+                    Protected Environment
+
+                </div>
+
+
+                <div class="login-footer">
+
+                    AirportShield 2026
+                    <br>
+
+                    Information Security Academic Project
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

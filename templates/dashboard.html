@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AirportShield | Dashboard</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-layout">
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="sidebar-logo">
+                    ✈
+                </div>
+
+                <div>
+                    <h2>AirportShield</h2>
+                    <span>Security System</span>
+                </div>
+
+            </div>
+
+
+            <nav class="sidebar-nav">
+
+                <a href="{{ url_for('dashboard') }}"
+                   class="nav-item active">
+
+                    <span>▦</span>
+                    Dashboard
+
+                </a>
+
+
+                <a href="{{ url_for('flight_management') }}"
+                   class="nav-item">
+
+                    <span>✈</span>
+                    Flight Management
+
+                </a>
+
+
+                <a href="{{ url_for('integrity') }}"
+                   class="nav-item">
+
+                    <span>✓</span>
+                    Integrity Verification
+
+                </a>
+
+
+                <a href="{{ url_for('logs') }}"
+                   class="nav-item">
+
+                    <span>▤</span>
+                    Security Logs
+
+                </a>
+
+            </nav>
+
+
+            <div class="sidebar-security">
+
+                <div class="security-mini-icon">
+                    🔒
+                </div>
+
+                <div>
+                    <strong>System Protected</strong>
+                    <small>Security monitoring active</small>
+                </div>
+
+            </div>
+
+
+            <a href="{{ url_for('logout') }}"
+               class="logout-button">
+
+                <span>↪</span>
+                Logout
+
+            </a>
+
+        </aside>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+
+        <main class="dashboard-main">
+
+
+            <!-- TOP HEADER -->
+
+            <header class="dashboard-header">
+
+                <div>
+
+                    <p class="page-label">
+                        AIRPORT SECURITY OPERATIONS
+                    </p>
+
+                    <h1>Security Dashboard</h1>
+
+                    <p class="page-description">
+                        Monitor flight operations and security controls
+                        from one centralized environment.
+                    </p>
+
+                </div>
+
+
+                <div class="user-profile">
+
+                    <div class="user-avatar">
+                        {{ session["username"][0]|upper }}
+                    </div>
+
+                    <div class="user-info">
+
+                        <strong>
+                            {{ session["username"]|capitalize }}
+                        </strong>
+
+                        <span>
+                            Security Administrator
+                        </span>
+
+                    </div>
+
+                    <div class="online-dot"></div>
+
+                </div>
+
+            </header>
+
+
+            <!-- ================= SECURITY STATUS ================= -->
+
+            <section class="security-banner">
+
+                <div class="security-banner-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <strong>
+                        AirportShield Security Status: ACTIVE
+                    </strong>
+
+                    <p>
+                        Authentication, integrity verification and
+                        security logging are operational.
+                    </p>
+
+                </div>
+
+                <span class="active-badge">
+                    SYSTEM SECURE
+                </span>
+
+            </section>
+
+
+            <!-- ================= STAT CARDS ================= -->
+
+            <section class="stats-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        ✈
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>Total Flights</span>
+
+                        <strong>
+                            {{ total_flights }}
+                        </strong>
+
+                        <small>
+                            Registered flight records
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        ✓
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>On-Time Flights</span>
+
+                        <strong>
+                            {{ on_time_flights }}
+                        </strong>
+
+                        <small>
+                            Normal flight operations
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        !
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>Delayed Flights</span>
+
+                        <strong>
+                            {{ delayed_flights }}
+                        </strong>
+
+                        <small>
+                            Requires monitoring
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon purple">
+                        🔐
+                    </div>
+
+                    <div class="stat-content">
+
+                        <span>Integrity</span>
+
+                        <strong>
+                            100%
+                        </strong>
+
+                        <small>
+                            Verification available
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= TWO COLUMN AREA ================= -->
+
+            <section class="dashboard-columns">
+
+
+                <!-- FLIGHT ACTIVITY -->
+
+                <div class="dashboard-card flight-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h2>Recent Flight Activity</h2>
+
+                            <p>
+                                Current flight management records
+                            </p>
+
+                        </div>
+
+                        <a href="{{ url_for('flight_management') }}"
+                           class="view-link">
+
+                            View All →
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="flight-table-wrapper">
+
+                        <table class="flight-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Flight</th>
+                                    <th>Gate</th>
+                                    <th>Destination</th>
+                                    <th>Status</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                {% for flight in flights %}
+
+                                <tr>
+
+                                    <td>
+
+                                        <strong>
+                                            {{ flight.flight_no }}
+                                        </strong>
+
+                                    </td>
+
+                                    <td>
+                                        {{ flight.gate }}
+                                    </td>
+
+                                    <td>
+                                        {{ flight.destination }}
+                                    </td>
+
+                                    <td>
+
+                                        {% if flight.status == "ON TIME" %}
+
+                                        <span class="status-badge on-time">
+                                            ● ON TIME
+                                        </span>
+
+                                        {% elif flight.status == "DELAYED" %}
+
+                                        <span class="status-badge delayed">
+                                            ● DELAYED
+                                        </span>
+
+                                        {% else %}
+
+                                        <span class="status-badge cancelled">
+                                            ● CANCELLED
+                                        </span>
+
+                                        {% endif %}
+
+                                    </td>
+
+                                </tr>
+
+                                {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SECURITY CONTROLS -->
+
+                <div class="dashboard-card controls-card">
+
+                    <div class="card-header">
+
+                        <div>
+
+                            <h2>Security Controls</h2>
+
+                            <p>
+                                Active protection mechanisms
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="control-list">
+
+
+                        <div class="control-item">
+
+                            <div class="control-icon">
+                                🔐
+                            </div>
+
+                            <div class="control-info">
+
+                                <strong>
+                                    Authentication
+                                </strong>
+
+                                <span>
+                                    Login protection active
+                                </span>
+
+                            </div>
+
+                            <span class="control-status">
+                                ACTIVE
+                            </span>
+
+                        </div>
+
+
+                        <div class="control-item">
+
+                            <div class="control-icon">
+                                #
+                            </div>
+
+                            <div class="control-info">
+
+                                <strong>
+                                    SHA-256 Integrity
+                                </strong>
+
+                                <span>
+                                    Data verification enabled
+                                </span>
+
+                            </div>
+
+                            <span class="control-status">
+                                ACTIVE
+                            </span>
+
+                        </div>
+
+
+                        <div class="control-item">
+
+                            <div class="control-icon">
+                                ▤
+                            </div>
+
+                            <div class="control-info">
+
+                                <strong>
+                                    Security Logging
+                                </strong>
+
+                                <span>
+                                    Events are recorded
+                                </span>
+
+                            </div>
+
+                            <span class="control-status">
+                                ACTIVE
+                            </span>
+
+                        </div>
+
+
+                        <div class="control-item">
+
+                            <div class="control-icon">
+                                🛡
+                            </div>
+
+                            <div class="control-info">
+
+                                <strong>
+                                    Access Control
+                                </strong>
+
+                                <span>
+                                    Authorized users only
+                                </span>
+
+                            </div>
+
+                            <span class="control-status">
+                                ACTIVE
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= RECENT SECURITY EVENTS ================= -->
+
+            <section class="dashboard-card events-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <h2>Recent Security Events</h2>
+
+                        <p>
+                            Latest activity recorded by AirportShield
+                        </p>
+
+                    </div>
+
+                    <a href="{{ url_for('logs') }}"
+                       class="view-link">
+
+                        Security Logs →
+
+                    </a>
+
+                </div>
+
+
+                {% if logs %}
+
+                <div class="event-list">
+
+                    {% for log in logs|reverse %}
+
+                    <div class="event-item">
+
+                        <div class="event-icon">
+                            ✓
+                        </div>
+
+                        <div class="event-details">
+
+                            <strong>
+                                {{ log.event }}
+                            </strong>
+
+                            <span>
+                                {{ log.time }}
+                            </span>
+
+                        </div>
+
+                        <span class="event-success">
+                            SECURE
+                        </span>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-events">
+
+                    No security events recorded yet.
+
+                </div>
+
+                {% endif %}
+
+            </section>
+
+
+            <!-- FOOTER -->
+
+            <footer class="dashboard-footer">
+
+                <span>
+                    AirportShield 2026
+                </span>
+
+                <span>
+                    Information Security Academic Project
+                </span>
+
+                <span>
+                    ● System Operational
+                </span>
+
+            </footer>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>
